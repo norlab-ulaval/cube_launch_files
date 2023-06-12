@@ -1,0 +1,13 @@
+<launch>
+	<node pkg="rslidar_driver" exec="rslidar_node" name="rslidar_node" output="screen">
+		<remap from="rslidar_packets" to="/rslidar16_packets"/>
+		<remap from="rslidar_packets_difop" to="/rslidar16_packets_difop"/>
+		<param name="frame_id" value="rslidar16"/>
+		<param name="model" value="RS16"/>
+		<param name="device_ip" value="192.168.1.200" />
+		<param name="host_ip" value="192.168.1.102" />
+		<param name="msop_port" value="6699" />
+		<param name="difop_port" value="7788"/>
+		<param name="cut_angle" value="0.0" />
+	</node>
+</launch>
