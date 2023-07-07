@@ -1,4 +1,5 @@
 <launch>
 	<include file="$(find-pkg-share cube_launch_files)/launch/lidar_launch.xml"/>
-	<include file="$(find-pkg-share cube_launch_files)/launch/imu_launch.xml"/>
+	<include file="$(find-pkg-share cube_launch_files)/launch/xsens_launch.xml"/>
+	<include file="$(find-pkg-share cube_launch_files)/launch/vectornav_launch.xml"/>
 </launch>

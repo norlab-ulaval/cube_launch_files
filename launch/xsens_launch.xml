@@ -1,8 +1,8 @@
 <launch>
 	<node pkg="xsens_driver" exec="mtnode.py" name="xsens_driver" output="screen">
-		<remap from="imu/data" to="MTI30_imu/data_raw"/>
+		<remap from="imu/data" to="MTI30_imu/data_biased"/>
 		<remap from="imu/mag" to="MTI30_imu/mag"/>
-		<param name="device" value="auto"/>
+		<param name="device" value="/dev/serial/by-id/usb-Xsens_MTi-30_AHRS_036006D4-if01-port0"/>
 		<param name="baudrate" value="115200"/>
 		<param name="timeout" value="0.002"/>
 		<param name="initial_wait" value="0.1"/>
@@ -13,13 +13,13 @@
 		<param name="linear_acceleration_covariance_diagonal" value="[0.0004, 0.0004, 0.0004]"/>
 		<param name="orientation_covariance_diagonal" value="[0.01745, 0.01745, 0.15708]"/>
 	</node>
-	<node pkg="norlab_imu_tools" exec="imu_bias_observer" name="imu_bias_observer" output="screen">
-		<remap from="imu_topic_in" to="/MTI30_imu/data_raw"/>
+	<node pkg="norlab_imu_tools" exec="imu_bias_observer" name="xsens_bias_observer" output="screen">
+		<remap from="imu_topic_in" to="/MTI30_imu/data_biased"/>
 		<remap from="bias_topic_out" to="/MTI30_imu/bias"/>
 		<param name="target_observation_samples" value="2000"/>
 	</node>
-	<node pkg="norlab_imu_tools" exec="imu_bias_compensator_node" name="imu_bias_compensator" output="screen">
-		<remap from="imu_topic_in" to="/MTI30_imu/data_raw"/>
+	<node pkg="norlab_imu_tools" exec="imu_bias_compensator_node" name="xsens_bias_compensator" output="screen">
+		<remap from="imu_topic_in" to="/MTI30_imu/data_biased"/>
 		<remap from="imu_topic_out" to="/MTI30_imu/data"/>
 		<remap from="bias_topic_in" to="/MTI30_imu/bias"/>
 	</node>

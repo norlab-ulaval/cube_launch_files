@@ -1,0 +1,68 @@
+<launch>
+	<node pkg="vectornav" exec="vectornav" name="vectornav_driver" output="screen">
+		<param name="port" value="/dev/serial/by-id/usb-FTDI_USB-RS232_Cable_AV0K7MQX-if00-port0"/>
+		<param name="baud" value="115200"/>
+		<param name="adjust_ros_timestamp" value="false"/>
+		<param name="reconnect_ms" value="500"/>
+		<param name="AsyncDataOutputType" value="0"/>
+		<param name="AsyncDataOutputFrequency" value="1"/>
+		<param name="syncInMode" value="3"/>
+		<param name="syncInEdge" value="0"/>
+		<param name="syncInSkipFactor" value="0"/>
+		<param name="syncOutMode" value="0"/>
+		<param name="syncOutPolarity" value="0"/>
+		<param name="syncOutSkipFactor" value="0"/>
+		<param name="syncOutPulseWidth_ns" value="100000000"/>
+		<param name="serialCount" value="0"/>
+		<param name="serialStatus" value="0"/>
+		<param name="spiCount" value="0"/>
+		<param name="spiStatus" value="0"/>
+		<param name="serialChecksum" value="1"/>
+		<param name="spiChecksum" value="0"/>
+		<param name="errorMode" value="1"/>
+		<param name="BO1.asyncMode" value="1"/>
+		<param name="BO1.rateDivisor" value="8"/>
+		<param name="BO1.commonField" value="0x200"/>
+		<param name="BO1.timeField" value="0x0000"/>
+		<param name="BO1.imuField" value="0x0000"/>
+		<param name="BO1.attitudeField" value="0x0000"/>
+		<param name="BO1.gps2Field" value="0x0000"/>
+		<param name="BO2.asyncMode" value="0"/>
+		<param name="BO2.rateDivisor" value="0"/>
+		<param name="BO2.commonField" value="0x0000"/>
+		<param name="BO2.timeField" value="0x0000"/>
+		<param name="BO2.imuField" value="0x0000"/>
+		<param name="BO2.gpsField" value="0x0000"/>
+		<param name="BO2.attitudeField" value="0x0000"/>
+		<param name="BO2.insField" value="0x0000"/>
+		<param name="BO2.gps2Field" value="0x0000"/>
+		<param name="BO3.asyncMode" value="0"/>
+		<param name="BO3.rateDivisor" value="0"/>
+		<param name="BO3.commonField" value="0x0000"/>
+		<param name="BO3.timeField" value="0x0000"/>
+		<param name="BO3.imuField" value="0x0000"/>
+		<param name="BO3.gpsField" value="0x0000"/>
+		<param name="BO3.attitudeField" value="0x0000"/>
+		<param name="BO3.insField" value="0x0000"/>
+		<param name="BO3.gps2Field" value="0x0000"/>
+		<param name="frame_id" value="vn100"/>
+	</node>
+	<node pkg="vectornav" exec="vn_sensor_msgs" name="vectornav_decoder" output="screen">
+		<remap from="/vectornav/imu" to="/vectornav_imu/data_biased"/>
+		<param name="use_enu" value="true"/>
+		<param name="orientation_covariance" value="[0.01,  0.0,  0.0,  0.0,  0.01,  0.0,  0.0,  0.0,  0.01]"/>
+		<param name="angular_velocity_covariance" value="[0.01,  0.0,  0.0,  0.0,  0.01,  0.0,  0.0,  0.0,  0.01]"/>
+		<param name="linear_acceleration_covariance" value="[0.01,  0.0,  0.0,  0.0,  0.01,  0.0,  0.0,  0.0,  0.01]"/>
+		<param name="magnetic_covariance" value="[0.01,  0.0,  0.0,  0.0,  0.01,  0.0,  0.0,  0.0,  0.01]"/>
+	</node>
+	<node pkg="norlab_imu_tools" exec="imu_bias_observer" name="vectornav_bias_observer" output="screen">
+		<remap from="imu_topic_in" to="/vectornav_imu/data_biased"/>
+		<remap from="bias_topic_out" to="/vectornav_imu/bias"/>
+		<param name="target_observation_samples" value="2000"/>
+	</node>
+	<node pkg="norlab_imu_tools" exec="imu_bias_compensator_node" name="vectornav_bias_compensator" output="screen">
+		<remap from="imu_topic_in" to="/vectornav_imu/data_biased"/>
+		<remap from="imu_topic_out" to="/vectornav_imu/data"/>
+		<remap from="bias_topic_in" to="/vectornav_imu/bias"/>
+	</node>
+</launch>
