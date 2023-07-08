@@ -48,7 +48,7 @@
 		<param name="frame_id" value="vn100"/>
 	</node>
 	<node pkg="vectornav" exec="vn_sensor_msgs" name="vectornav_decoder" output="screen">
-		<remap from="/vectornav/imu" to="/vectornav_imu/data_biased"/>
+		<remap from="/vectornav/imu_uncompensated" to="/vectornav_imu/data_biased"/>
 		<param name="use_enu" value="true"/>
 		<param name="orientation_covariance" value="[0.01,  0.0,  0.0,  0.0,  0.01,  0.0,  0.0,  0.0,  0.01]"/>
 		<param name="angular_velocity_covariance" value="[0.01,  0.0,  0.0,  0.0,  0.01,  0.0,  0.0,  0.0,  0.01]"/>
