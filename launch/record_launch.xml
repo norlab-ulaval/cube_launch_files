@@ -1,0 +1,3 @@
+<launch>
+	<executable cmd="ros2 bag record /rslidar16_packets /rslidar16_packets_difop /MTI30_imu/data /vectornav_imu/data" output="screen"/>
+</launch>

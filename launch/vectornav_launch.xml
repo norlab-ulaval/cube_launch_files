@@ -2,7 +2,7 @@
 	<node pkg="vectornav" exec="vectornav" name="vectornav_driver" output="screen">
 		<param name="port" value="/dev/serial/by-id/usb-FTDI_USB-RS232_Cable_AV0K7MQX-if00-port0"/>
 		<param name="baud" value="115200"/>
-		<param name="adjust_ros_timestamp" value="false"/>
+		<param name="adjust_ros_timestamp" value="true"/>
 		<param name="reconnect_ms" value="500"/>
 		<param name="AsyncDataOutputType" value="0"/>
 		<param name="AsyncDataOutputFrequency" value="1"/>
@@ -22,7 +22,7 @@
 		<param name="errorMode" value="1"/>
 		<param name="BO1.asyncMode" value="1"/>
 		<param name="BO1.rateDivisor" value="8"/>
-		<param name="BO1.commonField" value="0x200"/>
+		<param name="BO1.commonField" value="0x201"/>
 		<param name="BO1.timeField" value="0x0000"/>
 		<param name="BO1.imuField" value="0x0000"/>
 		<param name="BO1.attitudeField" value="0x0000"/>
